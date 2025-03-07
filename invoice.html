@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sistem Keuangan Pesantren Islam Al-Hijaz</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://i.pinimg.com/564x/72/61/16/726116c094cd041ffabddd7e81d97cdd.jpg'); /* URL background */
+      background-size: cover;
+      background-position: center;
+      color: #333;
+      text-align: center;
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.9); /* Latar belakang semi-transparan */
+      padding: 20px;
+      border-radius: 10px;
+      margin: 50px auto;
+      max-width: 600px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      color: #2c3e50;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 18px;
+      color: #555;
+      margin: 10px 0;
+    }
+    strong {
+      color: #000;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 80%;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #detailTagihan {
+      display: none; /* Sembunyikan detail tagihan sampai ID Santri dimasukkan */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Selamat Datang di Sistem Bagian Keuangan Pesantren Islam Al-Hijaz</h1>
+
+    <!-- Form untuk memasukkan ID Santri -->
+    <label for="santriId">Masukkan ID Santri:</label>
+    <input type="text" id="santriId" placeholder="Contoh: 001">
+    <button onclick="muatDataSantri()">Cari</button>
+
+    <!-- Detail Tagihan -->
+    <div id="detailTagihan">
+      <p>Nama Santri: <strong id="namaSantri"></strong></p>
+      <p>SPP: Rp <span id="spp"></span></p>
+      <p>Uang Buku: Rp <span id="uangBuku"></span></p>
+      <p>Denda: Rp <span id="denda"></span></p>
+      <p>Kegiatan Tahunan: Rp <span id="kegiatanTahunan"></span></p>
+      <p>Daftar Ulang: Rp <span id="daftarUlang"></span></p>
+      <p>Total Tagihan: <strong>Rp <span id="totalTagihan"></span></strong></p>
+    </div>
+  </div>
+
+  <script>
+    function muatDataSantri() {
+      const santriId = document.getElementById('santriId').value;
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbyQhObedjtLlmqLdQXDPRqPCOJD5IPNQ45vXoyrixJ7GNX_LBWkIH5YJGvQByGtLoIG6w/exec'; // Ganti dengan URL deployment Google Apps Script Anda
+
+      fetch(`${scriptUrl}?id=${santriId}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert(data.error);
+          } else {
+            document.getElementById('namaSantri').textContent = data.nama;
+            document.getElementById('spp').textContent = data.spp;
+            document.getElementById('uangBuku').textContent = data.uangBuku;
+            document.getElementById('denda').textContent = data.denda;
+            document.getElementById('kegiatanTahunan').textContent = data.kegiatanTahunan;
+            document.getElementById('daftarUlang').textContent = data.daftarUlang;
+            document.getElementById('totalTagihan').textContent = data.totalTagihan;
+            document.getElementById('detailTagihan').style.display = 'block';
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Terjadi kesalahan saat memuat data.');
+        });
+    }
+  </script>
+</body>
+</html>
