@@ -105,7 +105,7 @@
   <script>
     function muatDataSantri() {
       const santriId = document.getElementById('santriId').value;
-      const scriptUrl = 'YOUR_GOOGLE_SCRIPT_URL'; // Ganti dengan URL deployment Google Apps Script Anda
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbyQhObedjtLlmqLdQXDPRqPCOJD5IPNQ45vXoyrixJ7GNX_LBWkIH5YJGvQByGtLoIG6w/exec'; // Ganti dengan URL deployment Google Apps Script Anda
 
       fetch(`${scriptUrl}?id=${santriId}`)
         .then(response => response.json())
